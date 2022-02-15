@@ -7,7 +7,7 @@ import { useSelectedProjectValue } from '../context';
 import { ProjectOverlay } from './ProjectOverlay';
 import { TaskDate } from './TaskDate';
 
-interface AppProps {
+interface AddTaskProps {
   showAddTaskMain?: boolean;
   shouldShowMain?: boolean;
   showQuickAddTask?: boolean;
@@ -19,7 +19,7 @@ export const AddTask = ({
   shouldShowMain = false,
   showQuickAddTask,
   setShowQuickAddTask,
-}: AppProps) => {
+}: AddTaskProps) => {
   const [task, setTask] = useState('');
   const [taskDate, setTaskDate] = useState('');
   const [project, setProject] = useState('');
@@ -55,7 +55,7 @@ export const AddTask = ({
         .then(() => {
           setTask('');
           setProject('');
-          // setShowMain('');
+          setShowMain(false);
           setShowProjectOverlay(false);
         })
     );
