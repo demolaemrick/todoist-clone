@@ -3,10 +3,11 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import { firebase } from '../firebase';
 import { collatedTasksExist } from '../helpers';
+import { ITask } from '../types';
 
 export const useTasks = (selectedProject: string) => {
-  const [tasks, setTasks] = useState<any>([]);
-  const [archivedTasks, setArchivedTasks] = useState<any>([]);
+  const [tasks, setTasks] = useState<ITask[]>([]);
+  const [archivedTasks, setArchivedTasks] = useState<ITask[]>([]);
 
   useEffect(() => {
     let unsubscribe = firebase
@@ -31,19 +32,25 @@ export const useTasks = (selectedProject: string) => {
     let updatedUnsubscribe = unsubscribe.onSnapshot((snapshot) => {
       const newTasks = snapshot.docs.map((task) => ({
         id: task.id,
-        ...task.data(),
+        archived: task.data().archived,
+        date: task.data().date,
+        projectId: task.data().projectId,
+        task: task.data().task,
+        userId: task.data().userId,
       }));
 
       setTasks(
         selectedProject === 'NEXT_7'
           ? newTasks.filter(
-              (task: any) =>
+              (task: ITask) =>
                 moment(task.date, 'DD-MM-YYYY').diff(moment(), 'days') <= 7 &&
                 task.archived !== true
             )
-          : newTasks.filter((task: any) => task.archived !== true)
+          : newTasks.filter((task: ITask) => task.archived !== true)
       );
-      setArchivedTasks(newTasks.filter((task: any) => task.archived !== false));
+      setArchivedTasks(
+        newTasks.filter((task: ITask) => task.archived !== false)
+      );
     });
 
     return () => updatedUnsubscribe();

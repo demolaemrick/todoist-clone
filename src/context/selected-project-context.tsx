@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, FC } from 'react';
-import PropTypes from 'prop-types';
 
 interface ISelectProjectContext {
   selectedProject: string;
@@ -22,7 +21,3 @@ export const SelectedProjectProvider: FC = ({ children }) => {
 };
 
 export const useSelectedProjectValue = () => useContext(SelectedProjectContext);
-
-SelectedProjectProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};

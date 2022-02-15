@@ -3,8 +3,18 @@ import moment from 'moment';
 import { FaSpaceShuttle, FaSun, FaRegPaperPlane } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 
-export const TaskDate = ({ setTaskDate, showTaskDate, setShowTaskDate }: any) =>
-  showTaskDate && (
+interface TaskDateProps {
+  setTaskDate: React.Dispatch<React.SetStateAction<string>>;
+  showTaskDate: boolean;
+  setShowTaskDate: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export const TaskDate = ({
+  setTaskDate,
+  showTaskDate,
+  setShowTaskDate,
+}: TaskDateProps) => (
+  <>
+    showTaskDate && (
     <div className="task-date" data-testid="task-date-overlay">
       <ul className="task-date__list">
         <li>
@@ -78,7 +88,9 @@ export const TaskDate = ({ setTaskDate, showTaskDate, setShowTaskDate }: any) =>
         </li>
       </ul>
     </div>
-  );
+    );
+  </>
+);
 
 TaskDate.propTypes = {
   setTaskDate: PropTypes.func.isRequired,

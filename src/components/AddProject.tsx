@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { firebase } from '../firebase';
 import { generatePushId } from '../helpers';
 import { useProjectsValue } from '../context';
 
-export const AddProject = ({ shouldShow = false }) => {
+export const AddProject: React.FC<{ shouldShow?: boolean }> = ({
+  shouldShow = false,
+}) => {
   const [show, setShow] = useState(shouldShow);
   const [projectName, setProjectName] = useState('');
 
@@ -78,8 +79,4 @@ export const AddProject = ({ shouldShow = false }) => {
       </span>
     </div>
   );
-};
-
-AddProject.propTypes = {
-  shouldShow: PropTypes.bool,
 };
